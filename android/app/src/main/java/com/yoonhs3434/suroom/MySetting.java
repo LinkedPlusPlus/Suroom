@@ -19,6 +19,7 @@ public class MySetting {
     private static String my_url;
     private static int my_id;
     private static int group_id;
+    private static String my_name;
     private static User myUser;
     private static Group myGroup;
     public static boolean init = false;
@@ -32,7 +33,13 @@ public class MySetting {
         init = true;
     }
 
-    public static void setMyUrl(String urlParam){
+    public static String getMyName() {
+        return my_name;
+    }
+
+    public static void setMyName(String my_name) {
+        MySetting.my_name = my_name;
+    }    public static void setMyUrl(String urlParam){
         my_url = urlParam;
     }
 
@@ -206,4 +213,6 @@ public class MySetting {
             }
         }
     }
+
+
 }

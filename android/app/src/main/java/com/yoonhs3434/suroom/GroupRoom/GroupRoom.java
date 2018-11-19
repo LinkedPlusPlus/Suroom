@@ -41,6 +41,7 @@ public class GroupRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_room);
 
+
         mActivity = GroupRoom.this;
 
         Intent intent = getIntent();

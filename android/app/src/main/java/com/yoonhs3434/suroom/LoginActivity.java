@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         id_number = result.getInt("id");
                         MySetting.setMyId(id_number);
+                        MySetting.setMyName(text_id);
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                         MainActivity mainActivity = (MainActivity)MainActivity._MainActivity;
