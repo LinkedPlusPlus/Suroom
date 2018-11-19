@@ -68,21 +68,8 @@ public class ChatListAdapter extends BaseAdapter {
         final Context context = parent.getContext();
 
 
-       /* 위 삼항연산자의 if 문 형식
-       if (position != 0) {
-            if (chatItemsList.get(position).getName().equals(chatItemsList.get(position - 1).getName())) {
-                user_compare = USER_COMPARE_MINE;
-            } else
-                user_compare = USER_COMPARE_OTHER;
-        } else {
-            user_compare = USER_COMPARE_NONE;
-        }
-        */
-        // 동일 유저면 프로필 지우기
-
-
         // 동일 시간이면 시간 지우기
-        String date = position != 0 ? (chatItemsList.get(position).getDate().equals(chatItemsList.get(position - 1).getDate()) ? "" : chatItemsList.get(position).getDate()) : chatItemsList.get(position).getDate();
+        //String date = position != 0 ? (chatItemsList.get(position).getDate().equals(chatItemsList.get(position - 1).getDate()) ? "" : chatItemsList.get(position).getDate()) : chatItemsList.get(position).getDate();
         // GROUP 채팅방에서 USER 구분
         user_compare = position != 0 ? (chatItemsList.get(position).getName().equals(chatItemsList.get(position - 1).getName()) ? USER_COMPARE_SAME : USER_COMPARE_DIFF) : USER_COMPARE_DIFF;
         //user_compare = position > 0 ? (chatItemsList.get(position).getDate().equals(chatItemsList.get(position-1))) : chatItemsList.get(.getDate().equals()
@@ -110,13 +97,13 @@ public class ChatListAdapter extends BaseAdapter {
         }
 
 
-        if (user_id == chatItemsList.get(position).getId()) {
+        if (user_id.equals(chatItemsList.get(position).getId())) {
             //INVISIBLE
             viewHolder.other_user_LinearLayout.setVisibility(View.GONE);
             //VISIBLE
             viewHolder.my_user_LinearLayout.setVisibility(View.VISIBLE);
             //Set Data
-            viewHolder.date_my_textView.setText(date);
+            viewHolder.date_my_textView.setText(chatItemsList.get(position).getDate());
             viewHolder.content_my_textView.setText(chatItemsList.get(position).getContent());
         } else {
 
@@ -125,7 +112,7 @@ public class ChatListAdapter extends BaseAdapter {
             //VISIBLE
             viewHolder.other_user_LinearLayout.setVisibility(View.VISIBLE);
             //Set Data
-            viewHolder.date_other_textView.setText(date);
+            viewHolder.date_other_textView.setText(chatItemsList.get(position).getDate());
             viewHolder.content_other_textView.setText(chatItemsList.get(position).getContent());
             viewHolder.name_other_textView.setText(chatItemsList.get(position).getName());
 

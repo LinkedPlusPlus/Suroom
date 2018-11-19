@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical">-->
 
             <ImageView
                 android:id="@+id/profile_imageView"
@@ -30,7 +30,7 @@
                 android:id="@+id/name_other_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
                 android:text="other_name" />
         </LinearLayout>
 
@@ -38,12 +38,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
+
             <TextView
                 android:id="@+id/content_other_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/left_bubble"
                 android:text="other_content" />
+
             <TextView
                 android:id="@+id/date_other_textView"
                 android:layout_width="wrap_content"
