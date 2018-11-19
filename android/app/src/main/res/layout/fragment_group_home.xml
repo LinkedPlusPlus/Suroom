@@ -45,7 +45,6 @@
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-condensed"
-                android:text="스터디 이름"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="24sp" />
@@ -59,7 +58,6 @@
                 android:ems="10"
                 android:inputType="textMultiLine"
                 android:lineSpacingExtra="8sp"
-                android:text="공지는 여기에 씁니다. 공지는 여기에 씁니다. 공지는 여기에 씁니다. 공지는 여기에 씁니다. 공지는 여기에 씁니다. 공지는 여기에 씁니다. 공지는 여기에 씁니다."
                 android:textColor="@android:color/background_dark" />
 
             <LinearLayout
@@ -84,7 +82,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
-                    android:text="11월 1일 정기 모임"
                     android:textColor="@color/design_default_color_primary_dark"
                     android:textSize="18sp" />
 

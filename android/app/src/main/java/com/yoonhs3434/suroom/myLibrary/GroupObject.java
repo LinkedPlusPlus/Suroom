@@ -3,6 +3,7 @@ package com.yoonhs3434.suroom.myLibrary;
 import com.yoonhs3434.suroom.MySetting;
 
 public class GroupObject {
+    public boolean flag;
     public int id;
     public String name;
     public String description;
@@ -16,6 +17,7 @@ public class GroupObject {
 
     public GroupObject(){
         tag= new String[MySetting.NUM_OF_TAG];
+        flag = false;
     }
 
     public void setId(int id) {

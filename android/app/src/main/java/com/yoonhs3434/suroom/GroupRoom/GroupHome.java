@@ -1,5 +1,6 @@
 package com.yoonhs3434.suroom.GroupRoom;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,17 +32,20 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 public class GroupHome extends Fragment {
+
     ImageView bannerImage;
     boolean isJoin;
     Button joinButton, meetingButton;
     int groupId;
     TextView nameText, notificationText, meetingText;
 
+    GroupRoom mActivity;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group_home, container, false);
 
+        mActivity = (GroupRoom)GroupRoom.mActivity;
         isJoin = false;
         joinButton = (Button) view.findViewById(R.id.joinButton);
         meetingButton = (Button) view.findViewById(R.id.meetingButton);
@@ -63,7 +67,16 @@ public class GroupHome extends Fragment {
 
         if(isVisibleToUser){
             groupId = MySetting.getGroupId();
-            new HttpGetGroupInfo().execute(Integer.toString(groupId));
+            if(mActivity != null && mActivity.groupObj !=null && mActivity.groupObj.getId() == groupId){
+                nameText.setText(mActivity.groupObj.getName());
+                notificationText.setText(mActivity.groupObj.getNotification());
+                meetingText.setText(mActivity.groupObj.getMeeting());
+                if(mActivity.groupObj.flag == false){
+                    new IsJoin().execute("temp");
+                }
+            }else {
+                new HttpGetGroupInfo().execute(Integer.toString(groupId));
+            }
         }
     }
 
@@ -119,12 +132,14 @@ public class GroupHome extends Fragment {
                 isJoin = true;
                 joinButton.setVisibility(View.GONE);
                 meetingButton.setVisibility(View.VISIBLE);
+                mActivity.groupObj.flag = true;
                 Log.d("isJoin", Boolean.toString(isJoin));
             }
             else{
                 isJoin = false;
                 joinButton.setVisibility(View.VISIBLE);
                 meetingButton.setVisibility(View.GONE);
+                mActivity.groupObj.flag = true;
                 Log.d("isJoin", Boolean.toString(isJoin));
             }
         }
@@ -193,6 +208,10 @@ public class GroupHome extends Fragment {
             if(result != null) {
                 Log.d("result", result.toString());
                 try {
+                    mActivity.groupObj.setId(result.getInt("id"));
+                    mActivity.groupObj.setName(result.getString("name"));
+                    mActivity.groupObj.setNotification(result.getString("notification"));
+                    mActivity.groupObj.setMeeting(result.getString("meeting"));
                     nameText.setText(result.getString("name"));
                     notificationText.setText(result.getString("notification"));
                     meetingText.setText(result.getString("meeting"));

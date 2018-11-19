@@ -15,6 +15,8 @@ public class GroupAlbum extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group_album, container, false);
 
+
+
         return view;
     }
 }

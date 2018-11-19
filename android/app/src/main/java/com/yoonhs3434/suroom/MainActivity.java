@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     public static Activity _MainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        MySetting.setMyUrl("http://192.168.0.101:8000/rest/");
+        MySetting.setMyUrl("http://192.168.0.21:8000/rest/");
         _MainActivity = MainActivity.this;
     }
 

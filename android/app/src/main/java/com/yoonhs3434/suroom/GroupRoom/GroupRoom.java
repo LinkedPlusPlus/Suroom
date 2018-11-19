@@ -1,5 +1,6 @@
 package com.yoonhs3434.suroom.GroupRoom;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
@@ -29,15 +30,18 @@ public class GroupRoom extends AppCompatActivity {
 
     public GroupObject groupObj;
     public int groupId;
-    public boolean isJoin;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    public static Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_room);
+
+        mActivity = GroupRoom.this;
 
         Intent intent = getIntent();
         groupId = intent.getIntExtra("id", 0);
