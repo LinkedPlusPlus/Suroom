@@ -5,9 +5,9 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from .models import User, Group, Subject, Tendency
 from .models import User_Group, User_Subject, User_Tendency
-from .models import Wait
+from .models import Wait, Album
 from .serializers import UserSerializer, UserSubjectSerializer, UserTendencySerializer
-from. serializers import WaitSerializer, GroupSerializer, UserGroupSerializer
+from. serializers import WaitSerializer, GroupSerializer, UserGroupSerializer, AlbumSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -285,3 +285,23 @@ class UserGroupListUser(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except User_Group.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+class album_list(APIView):
+    def get(self, request):
+        images = Album.objects.all()
+        serializer = AlbumSerializer(images, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        data = JSONParser().parse(request)
+        try:
+            group = Group.objects.get(pk=data['group_id'])
+            user = User.objects.get(pk=data['user_id'])
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        obj, created = Album.objects.update_or_create(group=group, user=user, image = data['image'])
+        return Response(status=status.HTTP_201_CREATED)
+
