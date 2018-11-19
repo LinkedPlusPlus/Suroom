@@ -3,5 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<<<<<<< HEAD
   
+=======
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/opensource"/>
+>>>>>>> jeje
 </android.support.constraint.ConstraintLayout>
