@@ -185,6 +185,8 @@ class group_list(APIView):
         else:
             return Response(status.HTTP_406_NOT_ACCEPTABLE)
 
+    
+
 # 방 가입, 삭제 클래스
 class group_detail(APIView):
     def get_object(self, pk):
@@ -320,3 +322,18 @@ class GroupSearch(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = GroupSerializer(groups, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+class GroupUpdate(APIView):
+    def put(self, request, category):
+        data = JSONParser().parse(request)
+        try:
+            group = Group.objects.get(pk=data['group_id'])
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        if (category == 'notification'):
+            group.notification = data['content']
+        elif (category == 'meeting'):
+            group.meeting = data['content']
+
+        group.save()
+        return Response(status=status.HTTP_200_OK)
