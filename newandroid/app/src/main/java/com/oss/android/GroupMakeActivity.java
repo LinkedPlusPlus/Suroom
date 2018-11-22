@@ -71,6 +71,7 @@ public class GroupMakeActivity extends AppCompatActivity {
                 try {
                     reqData.accumulate("name", name);
                     reqData.accumulate("description", description);
+                    reqData.accumulate("master", Setting.getUserId());
                     reqData.accumulate("public", onPublic);
                     reqData.accumulate("max_num_people", maxNumPeople);
                     reqData.accumulate("tag1", tag[0]);

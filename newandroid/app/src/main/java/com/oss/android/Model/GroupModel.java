@@ -4,6 +4,7 @@ public class GroupModel {
     // 특정 그룹의 정보를 가져올 떄 사용하는 모델
     private boolean flag;
     private int id;
+    private int masterId;
     private String title;
     private String description;
     private int numPeople;
@@ -18,12 +19,13 @@ public class GroupModel {
         tags = new String[Setting.NUM_OF_TAG];
     }
 
-    public GroupModel(int id, String title, String description, int numPeople, int maxNumPeolpe, String[] tags) {
+    public GroupModel(int id, String title, String description, int numPeople, int maxNumPeolpe, int masterId, String[] tags) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.numPeople = numPeople;
         this.maxNumPeolpe = maxNumPeolpe;
+        this.masterId = masterId;
         this.tags = new String[5];
         for (int i = 0; i < tags.length; i++) {
             this.tags[i] = tags[i];
@@ -44,6 +46,14 @@ public class GroupModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(int masterId) {
+        this.masterId = masterId;
     }
 
     public String getTitle() {

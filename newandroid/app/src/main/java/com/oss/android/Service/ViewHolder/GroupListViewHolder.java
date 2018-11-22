@@ -9,7 +9,7 @@ import com.oss.android.R;
 
 public class GroupListViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView title, description, numPeople, maxNumPeople;
+    private TextView title, description, numPeople, maxNumPeople, master;
     private TextView[] tag = new TextView[5];
 
     public GroupListViewHolder(@NonNull View v) {
@@ -18,11 +18,16 @@ public class GroupListViewHolder extends RecyclerView.ViewHolder {
         description = (TextView) v.findViewById(R.id.item_group_textview_description);
         numPeople = (TextView) v.findViewById(R.id.item_group_textview_numpeople);
         maxNumPeople = (TextView) v.findViewById(R.id.item_group_textview_maxnumpeople);
+        master = (TextView) v.findViewById(R.id.item_group_textview_master);
         tag[0] = (TextView) v.findViewById(R.id.item_group_textview_tag1);
         tag[1] = (TextView) v.findViewById(R.id.item_group_textview_tag2);
         tag[2] = (TextView) v.findViewById(R.id.item_group_textview_tag3);
         tag[3] = (TextView) v.findViewById(R.id.item_group_textview_tag4);
         tag[4] = (TextView) v.findViewById(R.id.item_group_textview_tag5);
+    }
+
+    public TextView getMaster() {
+        return master;
     }
 
     public TextView getTitle() {
