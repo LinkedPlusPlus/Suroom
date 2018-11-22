@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,10 +29,12 @@ import com.oss.android.ViewHolder.GroupListViewHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -76,6 +79,13 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, GroupMakeActivity.class);
                 startActivity(intent);
+            }
+        });
+        btn_search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String searchText = editText_serach.getText().toString();
+                new SearchGroup().execute(searchText);
             }
         });
 
@@ -239,6 +249,106 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
                 recyclerView.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    private class SearchGroup extends AsyncTask<String, Void, JSONArray>{
+
+        HttpURLConnection conn = null;
+
+        @Override
+        protected JSONArray doInBackground(String... strings) {
+            String searchText = strings[0];
+
+            try {
+                URL url = new URL(Setting.getUrl()+"group/search/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+
+                JSONObject params = new JSONObject();
+                params.accumulate("searchText", searchText);
+
+                OutputStream os = conn.getOutputStream();
+                os.write(params.toString().getBytes("UTF-8"));
+                os.flush();
+                os.close();
+
+                conn.connect();
+                int responseCode = conn.getResponseCode();
+
+                if(responseCode == 404){
+                    if(conn!=null)
+                        conn.disconnect();
+                    return null;
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(conn.getInputStream());
+                BufferedReader reader = new BufferedReader(inputStreamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+                String inputLine;
+                while ((inputLine = reader.readLine())!=null){
+                    stringBuilder.append(inputLine);
+                }
+                reader.close();
+                inputStreamReader.close();
+                conn.disconnect();
+
+                String resultStr = stringBuilder.toString();
+                JSONArray resultArray = new JSONArray(resultStr);
+                return resultArray;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray result) {
+            super.onPostExecute(result);
+
+            if(result != null){
+                groupList = null;
+                groupList = new ArrayList<>();
+
+                int id;
+                String title;
+                String description;
+                int numPeople;
+                int maxNumPeople;
+                String[] tag = new String[Setting.NUM_OF_TAG];
+
+                try {
+                    for (int i = 0; i < result.length(); i++) {
+                        JSONObject group = result.getJSONObject(i);
+
+                        id = result.getJSONObject(i).getInt("id");
+                        title = result.getJSONObject(i).getString("name");
+                        description = result.getJSONObject(i).getString("description");
+                        numPeople = result.getJSONObject(i).getInt("num_people");
+                        maxNumPeople = result.getJSONObject(i).getInt("max_num_people");
+                        for (int j = 0; j < tag.length; j++) {
+                            tag[j] = " ";
+                            String temp = result.getJSONObject(i).getString("tag" + Integer.toString(j + 1));
+                            if (temp.equals("")) {
+                                tag[j] = " ";
+                            } else
+                                tag[j] = "# " + temp;
+                        }
+                        groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag));
+                    }
+
+                    adapter = new MyAdapter(mContext, groupList);
+                    recyclerView.setAdapter(adapter);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
             }
         }
     }

@@ -74,3 +74,9 @@ class User_Tendency(models.Model):
 class Wait(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField(default=timezone.now)
+
+class Album(models.Model):
+    group = models.ForeignKey(Group, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, null = True,on_delete = models.CASCADE)
+    image = models.ImageField(default = 'media/default_image.jpg')
+    published = models.DateTimeField(default=timezone.now)
