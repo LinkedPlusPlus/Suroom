@@ -1,13 +1,22 @@
 package com.yoonhs3434.suroom.GroupRoom;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yoonhs3434.suroom.MySetting;
 import com.yoonhs3434.suroom.R;
@@ -28,6 +40,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -36,16 +49,40 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import static android.app.Activity.RESULT_OK;
+
 public class GroupAlbum extends Fragment {
 
+    private final int GALLERY_CODE=1112;
+
     int groupId;
+    TextView testText;
+    Button testButton;
+    Context mContext;
+
+    private static final int SELECT_PICTURE = 1;
+
+    private String selectedImagePath;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group_album, container, false);
 
+        mContext = getActivity().getBaseContext();
         // 장고에서 이미지 불러와야 함.
-        int img[] = null;
+        int img[] = {R.drawable.loading};
         groupId = MySetting.getGroupId();
+
+        testText = view.findViewById(R.id.testText);
+        testButton = view.findViewById(R.id.testButton);
+
+        final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/test/";
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectGallery();
+            }
+        });
 
         MyAdapter adapter = new MyAdapter(getActivity().getApplicationContext(), R.layout.gallery_image, img);
 
@@ -64,35 +101,71 @@ public class GroupAlbum extends Fragment {
         */
 
 
-
         return view;
     }
 
-    private class SendImage extends AsyncTask<String, Void, Void> {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        Toast.makeText(mContext, "resultCode : "+resultCode,Toast.LENGTH_SHORT).show();
+
+        if(requestCode == GALLERY_CODE)
+        {
+            if(resultCode==Activity.RESULT_OK)
+            {
+                try {
+                    //Uri에서 이미지 이름을 얻어온다.
+                    //String name_Str = getImageNameToUri(data.getData());
+
+                    //이미지 데이터를 비트맵으로 받아온다.
+                    Bitmap image_bitmap 	= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
+
+                    SendImage post = new SendImage();
+                    post.execute(image_bitmap);
+
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void selectGallery() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, GALLERY_CODE);
+    }
+
+
+    private class SendImage extends AsyncTask<Bitmap, Void, Void> {
 
         String REQUEST_METHOD = "POST";
         HttpURLConnection conn = null;
 
         @Override
-        protected Void doInBackground(String... strings) {
-            String path = strings[0];
+        protected Void doInBackground(Bitmap... bitmaps) {
 
             try {
-                FileInputStream fileInputStream = new FileInputStream(new File(path));
-
                 URL url = new URL(MySetting.getMyUrl() + "group/album/");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod(REQUEST_METHOD);
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 conn.setUseCaches(false);
 
-                // path : ex) "/sdcard/aaa.jpg"
-                Bitmap img = BitmapFactory.decodeFile(path);
-
                 JSONObject data = new JSONObject();
                 data.accumulate("group_id", MySetting.getGroupId());
                 data.accumulate("user_id", MySetting.getMyId());
-                data.accumulate("image", getStringFromBitmap(img));
+                data.accumulate("image", bitmapToByteArray(bitmaps[0]));
 
                 OutputStream os = conn.getOutputStream();
                 os.write(data.toString().getBytes("UTF-8"));
@@ -111,7 +184,7 @@ public class GroupAlbum extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             } finally {
-                if(conn != null)
+                if (conn != null)
                     conn.disconnect();
             }
             return null;
@@ -120,23 +193,15 @@ public class GroupAlbum extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
+            Toast.makeText(mContext, "이미지 업로드 완료", Toast.LENGTH_LONG);
         }
+    }
 
-        private String getStringFromBitmap(Bitmap bitmapPicture) {
-            /*
-             * This functions converts Bitmap picture to a string which can be
-             * JSONified.
-             * */
-            final int COMPRESSION_QUALITY = 100;
-            String encodedImage;
-            ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
-            bitmapPicture.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
-                    byteArrayBitmapStream);
-            byte[] b = byteArrayBitmapStream.toByteArray();
-            encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-            return encodedImage;
-        }
+    public byte[] bitmapToByteArray( Bitmap bitmap ) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
+        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
+        byte[] byteArray = stream.toByteArray() ;
+        return byteArray ;
     }
 }
 
