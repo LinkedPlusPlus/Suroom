@@ -36,7 +36,6 @@ public class PlannerFragment extends Fragment {
     private Calendar mCal;
 
 
-
     public PlannerFragment() {
         // Required empty public constructor
     }
@@ -98,4 +97,4 @@ public class PlannerFragment extends Fragment {
         }
     }
 
-    }
+}

@@ -6,25 +6,33 @@
     tools:context=".Fragment.Group.PlannerFragment">
 
 
-    <TextView
-        android:id="@+id/group_planner_textview_date"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/background_light"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/group_planner_textview_date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/background_light"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            />
 
-    <GridView
-        android:id="@+id/group_planner_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:listSelector="@android:color/holo_orange_dark"
-        android:numColumns="7">
+        <GridView
+            android:id="@+id/group_planner_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:listSelector="@android:color/holo_orange_dark"
+            android:numColumns="7">
 
 
-    </GridView>
+        </GridView>
+
+    </LinearLayout>
+
 </FrameLayout>
