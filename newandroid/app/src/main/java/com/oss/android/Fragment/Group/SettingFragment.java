@@ -1,6 +1,7 @@
 package com.oss.android.Fragment.Group;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,10 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.oss.android.Fragment.Group.popUp.UpdateGroupContent;
 import com.oss.android.Model.Setting;
 import com.oss.android.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,7 +32,7 @@ import java.net.URL;
 public class SettingFragment extends Fragment {
 
 
-    Button btn_leave;
+    Button btn_leave, btn_notification, btn_meeting;
     int groupId;
 
     @Override
@@ -41,7 +47,24 @@ public class SettingFragment extends Fragment {
                 new HttpWithdrawGroup().execute("");
             }
         });
-
+        btn_notification = (Button) view.findViewById(R.id.button_update_notification);
+        btn_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UpdateGroupContent.class);
+                intent.putExtra("category", "notification");
+                startActivity(intent);
+            }
+        });
+        btn_meeting = (Button) view.findViewById(R.id.button_update_meeting);
+        btn_meeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UpdateGroupContent.class);
+                intent.putExtra("category", "meeting");
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -91,4 +114,8 @@ public class SettingFragment extends Fragment {
             }
         }
     }
+
+
 }
+
+

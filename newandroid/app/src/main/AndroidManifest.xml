@@ -28,13 +28,14 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".Service.JoinCheck"/>
+        <activity android:name=".Service.JoinCheck" />
         <activity android:name=".GroupActivity" />
         <activity
             android:name=".GroupMakeActivity"
             android:label="@string/title_activity_group_make"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Service.TendencyActivity"></activity>
+        <activity android:name=".Service.TendencyActivity" />
+        <activity android:name=".Fragment.Group.popUp.UpdateGroupContent"></activity>
     </application>
 
 </manifest>
