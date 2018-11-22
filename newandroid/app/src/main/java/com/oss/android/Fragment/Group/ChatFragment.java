@@ -17,10 +17,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.oss.android.Adapter.ChatListAdapter;
 import com.oss.android.Model.ChatModel;
 import com.oss.android.Model.Setting;
 import com.oss.android.R;
+import com.oss.android.Service.Adapter.ChatListAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

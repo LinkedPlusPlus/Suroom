@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\yhs15\\workspace\\suroom\\suroom_venv\\Scripts\\python.exe",
+    "python.pythonPath": "c:\\Users\\32131704\\Desktop\\aGoodDay\\myvenv\\Scripts\\python.exe",
     "python.linting.pylintArgs": [
         "--load-plugins",
         "pylint_django",

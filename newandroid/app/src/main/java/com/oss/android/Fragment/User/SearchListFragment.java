@@ -24,7 +24,8 @@ import com.oss.android.GroupMakeActivity;
 import com.oss.android.Model.GroupModel;
 import com.oss.android.Model.Setting;
 import com.oss.android.R;
-import com.oss.android.ViewHolder.GroupListViewHolder;
+import com.oss.android.Service.ViewHolder.GroupListViewHolder;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;

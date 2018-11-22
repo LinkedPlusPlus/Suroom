@@ -1,4 +1,4 @@
-package com.oss.android.Adapter;
+package com.oss.android.Service.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.oss.android.Model.ChatModel;
 import com.oss.android.Model.Setting;
 import com.oss.android.R;
-import com.oss.android.ViewHolder.ChatViewHolder;
+import com.oss.android.Service.ViewHolder.ChatViewHolder;
 
 import java.util.ArrayList;
 

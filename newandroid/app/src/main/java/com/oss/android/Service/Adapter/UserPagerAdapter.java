@@ -1,4 +1,4 @@
-package com.oss.android.Adapter;
+package com.oss.android.Service.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,7 +8,6 @@ import com.oss.android.Fragment.User.HomeFragment;
 import com.oss.android.Fragment.User.MyGroupFragment;
 import com.oss.android.Fragment.User.SearchListFragment;
 import com.oss.android.Fragment.User.SettingFragment;
-import com.oss.android.Fragment.User.*;
 
 public class UserPagerAdapter extends FragmentPagerAdapter {
 

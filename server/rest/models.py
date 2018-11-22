@@ -22,12 +22,13 @@ class User_info(models.Model):
 
 # User와 Group은 수정 할 시 안드로이드의 MySetting도 수정해줘야 함.
 class User(models.Model):
-    auth_id = models.CharField(max_length=20)
+    auth_id = models.CharField(max_length=20, unique = True)
     auth_pw = models.CharField(max_length=20)
 
 class Group(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=40, default="")
+    master = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     public = models.NullBooleanField(default=True)
     max_num_people = models.IntegerField(default = 10)
     num_people = models.IntegerField(default = 0)
@@ -49,21 +50,11 @@ class User_Group(models.Model):
     class Meta:
         unique_together = (("user", "group"),)
 
-class Subject(models.Model):
-    name = models.CharField(max_length=20)
-
-class User_Subject(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = (("user_id", "subject_id"),)
-
 class Tendency(models.Model):
     name = models.CharField(max_length=20)
 
 class User_Tendency(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
     rule = models.SmallIntegerField(default=1)
     learning = models.SmallIntegerField(default=1)
     numberPeople = models.SmallIntegerField(default=1)
