@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/group_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@android:color/holo_green_light"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/group_tablayout"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/group_tab_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_home" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/group_tab_planner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Planner" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/group_tab_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="album" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/group_tab_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="chat" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/group_tab_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="setting" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/group_viewpager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_tablayout" />
+</android.support.constraint.ConstraintLayout>
