@@ -28,7 +28,6 @@ class User(models.Model):
 class Group(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=40, blank=True, null=True)
-    master = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
     public = models.NullBooleanField(default=True)
     max_num_people = models.IntegerField(default = 10)
     num_people = models.IntegerField(default = 0)
@@ -65,3 +64,4 @@ class User_Tendency(models.Model):
 class Wait(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField(default=timezone.now)
+

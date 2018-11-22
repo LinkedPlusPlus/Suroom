@@ -126,7 +126,6 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
             viewHolder.getDescription().setText(groupList.get(i).getDescription());
             viewHolder.getNumPeople().setText(Integer.toString(groupList.get(i).getNumPeople()));
             viewHolder.getMaxNumPeople().setText(Integer.toString(groupList.get(i).getMaxNumPeolpe()));
-            viewHolder.getMaster().setText(Integer.toString(groupList.get(i).getMasterId()));
             for (int j = 0; j < viewHolder.getTag().length; j++) {
                 viewHolder.getTag()[j].setText(groupList.get(i).getTags()[j]);
             }
@@ -217,7 +216,6 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
             String description;
             int numPeople;
             int maxNumPeople;
-            int master;
             String[] tag = new String[Setting.NUM_OF_TAG];
 
             try {
@@ -227,7 +225,7 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
                     description = result.getJSONObject(i).getString("description");
                     numPeople = result.getJSONObject(i).getInt("num_people");
                     maxNumPeople = result.getJSONObject(i).getInt("max_num_people");
-                    master = result.getJSONObject(i).getInt("master");
+
                     for (int j = 0; j < tag.length; j++) {
                         tag[j] = " ";
                         String temp = result.getJSONObject(i).getString("tag" + Integer.toString(j + 1));
@@ -236,7 +234,7 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
                         } else
                             tag[j] = "# " + temp;
                     }
-                    groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, master, tag));
+                    groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag));
                 }
 
                 adapter = new MyAdapter(mContext, groupList);

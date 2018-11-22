@@ -101,17 +101,6 @@
                     android:layout_weight="0"
                     android:gravity="left"
                     android:text="maxNum" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/item_group_textview_master"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="master"
-                    android:visibility="invisible"/>
-
             </LinearLayout>
 
         </LinearLayout>
