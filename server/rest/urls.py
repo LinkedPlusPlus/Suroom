@@ -15,4 +15,5 @@ urlpatterns = [
     path('group/isJoin/<int:user_pk>/<int:group_pk>/', views.UserGroupList.as_view()),
     path('group/u/<int:pk>/', views.UserGroupListUser.as_view()),
     path('group/album/', views.album_list.as_view()),
+    path('group/search/', views.GroupSearch.as_view()),
 ]

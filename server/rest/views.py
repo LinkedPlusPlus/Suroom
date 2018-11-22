@@ -12,6 +12,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
+from django.db.models import Q
 
 # Create your views here.
 
@@ -305,3 +306,17 @@ class album_list(APIView):
         obj, created = Album.objects.update_or_create(group=group, user=user, image = data['image'])
         return Response(status=status.HTTP_201_CREATED)
 
+# 그룹 검색. 태그로 검색함.
+# data = {
+# 'searchText' = '프로그래밍 자바 영어',
+# }
+class GroupSearch(APIView):
+    def post(self, request):
+        data = JSONParser().parse(request)
+        try:
+            words = data['searchText'].split()
+            groups = Group.objects.filter(Q(tag1__in=words)|Q(tag2__in=words)|Q(tag3__in=words)|Q(tag4__in=words)|Q(tag5__in=words))
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = GroupSerializer(groups, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)

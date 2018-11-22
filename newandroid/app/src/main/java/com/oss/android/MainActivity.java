@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Setting.setUrl("http://10.0.2.2:8000/rest/");
+        Setting.setUrl("http://172.30.1.47:8000/rest/");
         mainActivity = MainActivity.this;
     }
 }
