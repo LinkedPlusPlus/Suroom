@@ -5,13 +5,14 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from .models import User, Group, Subject, Tendency
 from .models import User_Group, User_Subject, User_Tendency
-from .models import Wait
+from .models import Wait, Album
 from .serializers import UserSerializer, UserSubjectSerializer, UserTendencySerializer
-from. serializers import WaitSerializer, GroupSerializer, UserGroupSerializer
+from. serializers import WaitSerializer, GroupSerializer, UserGroupSerializer, AlbumSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
+from django.db.models import Q
 
 # Create your views here.
 
@@ -184,6 +185,8 @@ class group_list(APIView):
         else:
             return Response(status.HTTP_406_NOT_ACCEPTABLE)
 
+    
+
 # 방 가입, 삭제 클래스
 class group_detail(APIView):
     def get_object(self, pk):
@@ -285,3 +288,52 @@ class UserGroupListUser(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except User_Group.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+class album_list(APIView):
+    def get(self, request):
+        images = Album.objects.all()
+        serializer = AlbumSerializer(images, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        data = JSONParser().parse(request)
+        try:
+            group = Group.objects.get(pk=data['group_id'])
+            user = User.objects.get(pk=data['user_id'])
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        obj, created = Album.objects.update_or_create(group=group, user=user, image = data['image'])
+        return Response(status=status.HTTP_201_CREATED)
+
+# 그룹 검색. 태그로 검색함.
+# data = {
+# 'searchText' = '프로그래밍 자바 영어',
+# }
+class GroupSearch(APIView):
+    def post(self, request):
+        data = JSONParser().parse(request)
+        try:
+            words = data['searchText'].split()
+            groups = Group.objects.filter(Q(tag1__in=words)|Q(tag2__in=words)|Q(tag3__in=words)|Q(tag4__in=words)|Q(tag5__in=words))
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = GroupSerializer(groups, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+class GroupUpdate(APIView):
+    def put(self, request, category):
+        data = JSONParser().parse(request)
+        try:
+            group = Group.objects.get(pk=data['group_id'])
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        if (category == 'notification'):
+            group.notification = data['content']
+        elif (category == 'meeting'):
+            group.meeting = data['content']
+
+        group.save()
+        return Response(status=status.HTTP_200_OK)

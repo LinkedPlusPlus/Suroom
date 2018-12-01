@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import User, Group, Subject, Tendency
 from .models import User_Group, User_Subject, User_Tendency
-from .models import Wait
+from .models import Wait, Album
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -42,6 +42,11 @@ class UserTendencyAdmin(admin.ModelAdmin):
 @admin.register(Wait)
 class WaitAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'start_time']
+    list_display_links = ['id']
+
+@admin.register(Album)
+class AlbumAdmin(admin.ModelAdmin):
+    list_display = ['id', 'group', 'image']
     list_display_links = ['id']
 
 '''

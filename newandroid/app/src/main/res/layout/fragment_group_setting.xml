@@ -67,7 +67,36 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_weight="0"
+<<<<<<< HEAD
                 android:background="@drawable/change" />
+=======
+                android:text="탈퇴" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_update_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="공지사항 변경"
+                android:textColor="@android:color/background_dark"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button_update_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="변경" />
+>>>>>>> 5933a89420d8cb92e7b4381f34ca058afffc2834
 
         </LinearLayout>
 
@@ -83,16 +112,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_weight="1"
+<<<<<<< HEAD
                 android:background="@drawable/moinchage"
+=======
+                android:text="모임 변경"
+>>>>>>> 5933a89420d8cb92e7b4381f34ca058afffc2834
                 android:textColor="@android:color/background_dark"
                 android:textSize="24sp" />
 
             <Button
                 android:id="@+id/button_update_meeting"
+<<<<<<< HEAD
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_weight="0"
                 android:background="@drawable/change" />
+=======
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="변경" />
+>>>>>>> 5933a89420d8cb92e7b4381f34ca058afffc2834
 
         </LinearLayout>
 
