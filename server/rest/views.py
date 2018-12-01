@@ -3,12 +3,12 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from .models import User, Group, Tendency
+from .models import User, Group, Tendency, Planner
 from .models import User_Group, User_Tendency
 from .models import Wait
-from .serializers import UserSerializer, UserTendencySerializer
+from .serializers import UserSerializer, UserTendencySerializer, PlannerSerializer
 from. serializers import WaitSerializer, GroupSerializer, UserGroupSerializer
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
@@ -253,3 +253,67 @@ class UserGroupListUser(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except User_Group.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class PlannerList(generics.ListAPIView):
+    queryset = Planner.objects.all()
+    serializer_class = PlannerSerializer
+
+    def get_queryset(self):
+        year = None;
+        month = None;
+        day = None;
+        group_pk = self.kwargs['group_pk']
+        if 'year' in self.request.GET:
+            year = self.request.GET['year']
+        if 'month' in self.request.GET:
+            month = self.request.GET['month']
+        if 'day' in self.request.GET:
+            day = self.request.GET['day']
+        if year is None or month is None or day is None:
+            return Planner.objects.filter(group_id=group_pk)
+        return Planner.objects.filter(group_id=group_pk, date__year=year, date__month=month, date__day=day)
+
+
+class planner_list(APIView):
+    def get(self, request, group_pk):
+        year = None;
+        month = None;
+        day = None;
+        group_pk = group_pk
+        if 'year' in request.GET:
+            year = request.GET['year']
+        if 'month' in request.GET:
+            month = request.GET['month']
+        if 'day' in request.GET:
+            day = request.GET['day']
+        #if year is None or month is None or day is None:
+
+        planner = Planner.objects.filter(group_id=group_pk, date__year=year, date__month=month, date__day=day)
+        serializer = PlannerSerializer(planner, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        data = JSONParser().parse(request)
+        serializer = PlannerSerializer(data=data)
+        if (serializer.is_valid()):
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(status.HTTP_406_NOT_ACCEPTABLE)
+class planner_detail(APIView): 
+    def get_object(self, pk):
+        try:
+            return Planner.objects.get(pk=pk)
+        except Planner.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND) 
+    def delete(self, request, pk):
+        obj = self.get_object(pk)
+        obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+class PlannerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Planner.objects.all()
+    serializer_class = PlannerSerializer

@@ -46,7 +46,7 @@ public class JoinCheck extends Activity {
             public void onClick(View v) {
                 JSONObject reqData = new JSONObject();
                 try {
-                    reqData.accumulate("user_id", Setting.getUserId());
+                    reqData.accumulate("user", Setting.getUserId());
                     reqData.accumulate("group_id", groupId);
 
                     JoinGroupTask send = new JoinGroupTask();

@@ -1,38 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.Group.PlannerFragment">
 
-
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/group_planner_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/group_planner_textview_date"
+        android:fillViewport="true">
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/background_light"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            />
+            android:layout_height="match_parent">
 
-        <GridView
-            android:id="@+id/group_planner_gridview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:listSelector="@android:color/holo_orange_dark"
-            android:numColumns="7">
+            <EditText
+                android:id="@+id/group_planner_edittext_year"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/background_light"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="yyyy"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toEndOf="@+id/group_planner_btn_left"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/group_planner_edittext_month"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/background_light"
+                android:gravity="center"
+                android:hint="mm"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/group_planner_edittext_year"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.oss.android.View.ExpandableHeightGridView
+                android:id="@+id/group_planner_gridview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:listSelector="@android:color/holo_orange_dark"
+                android:numColumns="7"
+                android:isScrollContainer="false"
+                android:stretchMode="columnWidth"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/group_planner_btn_left">
+
+            </com.oss.android.View.ExpandableHeightGridView>
+
+            <TextView
+                android:id="@+id/group_planner_text_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/group_planner_gridview" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/group_planner_recyclerview"
+                android:layout_width="368dp"
+                android:layout_height="179dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/group_planner_text_date" />
 
 
-        </GridView>
+            <ImageButton
+                android:id="@+id/group_planner_btn_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/planner_left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/group_planner_btn_right"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/planner_right"
+                app:layout_constraintStart_toEndOf="@+id/group_planner_edittext_month"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <Button
+                android:id="@+id/group_planner_btn_add"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="+"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 </FrameLayout>

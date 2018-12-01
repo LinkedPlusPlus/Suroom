@@ -13,4 +13,7 @@ urlpatterns = [
     path('group/join/', views.join_group),
     path('group/isJoin/<int:user_pk>/<int:group_pk>/', views.UserGroupList.as_view()),
     path('group/u/<int:pk>/', views.UserGroupListUser.as_view()),
+    path('group/<int:group_pk>/planner/', views.planner_list.as_view()),
+    path('group/planner/create/', views.planner_list.as_view()),
+    path('group/planner/<int:pk>/delete', views.planner_detail.as_view()),
 ]
