@@ -1,4 +1,4 @@
-package com.oss.android.Adapter;
+package com.oss.android.Service.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.oss.android.R;
-import com.oss.android.ViewHolder.PlannerViewHolder;
+import com.oss.android.Service.ViewHolder.PlannerViewHolder;
 
 import java.util.Calendar;
 import java.util.List;

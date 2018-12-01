@@ -1,4 +1,4 @@
-package com.oss.android.Adapter;
+package com.oss.android.Service.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

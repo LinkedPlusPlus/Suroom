@@ -1,4 +1,4 @@
-package com.oss.android.ViewHolder;
+package com.oss.android.Service.ViewHolder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

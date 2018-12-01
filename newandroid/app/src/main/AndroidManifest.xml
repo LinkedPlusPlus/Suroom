@@ -36,6 +36,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Service.TendencyActivity" />
         <activity android:name=".Fragment.Group.popUp.UpdateGroupContent"></activity>
+        <activity android:name=".Fragment.Group.Planner.PlannerDetailActivity" />
+        <activity android:name=".Fragment.Group.Planner.PlannerCreateActivity"></activity>
     </application>
 
 </manifest>

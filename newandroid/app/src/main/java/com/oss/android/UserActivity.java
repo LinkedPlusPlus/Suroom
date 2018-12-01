@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.oss.android.Adapter.UserPagerAdapter;
+import com.oss.android.Service.Adapter.UserPagerAdapter;
 
 public class UserActivity extends AppCompatActivity {
 

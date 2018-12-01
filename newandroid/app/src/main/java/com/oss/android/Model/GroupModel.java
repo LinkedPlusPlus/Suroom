@@ -63,6 +63,7 @@ public class GroupModel {
         this.id = id;
     }
 
+
     public String getTitle() {
         return title;
     }
@@ -104,7 +105,7 @@ public class GroupModel {
     }
 
     public void setTags(String... tags) {
-        for(int i=0; i<tags.length; i++)
+        for (int i = 0; i < tags.length; i++)
             this.tags[i] = tags[i];
     }
 

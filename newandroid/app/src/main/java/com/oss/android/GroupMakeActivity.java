@@ -53,6 +53,10 @@ public class GroupMakeActivity extends AppCompatActivity {
         btn_make.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(editText_name.getText().toString().equals("") || editTexts_tags[0].getText().toString().equals("")){
+                    Toast.makeText(GroupMakeActivity.this, "필수 입력 부분을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String name = editText_name.getText().toString();
                 String description = editText_description.getText().toString();
                 String [] tag = new String[NUM_OF_TAG];
@@ -155,11 +159,14 @@ public class GroupMakeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer result){
+            if(result == null){
+                return;
+            }
             Log.d("group ID", Integer.toString(result));
 
             JSONObject reqData = new JSONObject();
             try {
-                reqData.accumulate("user_id", Setting.getUserId());
+                reqData.accumulate("user", Setting.getUserId());
                 reqData.accumulate("group_id", result);
                 reqData.accumulate("role", 1);
             } catch (JSONException e) {

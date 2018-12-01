@@ -5,7 +5,6 @@ urlpatterns = [
     path('join/', views.user_list),
     path('join/<int:pk>/', views.user_detail),
     path('sign_in/', views.user_login),
-    path('choice/subject/', views.choice_subject),
     path('choice/tendency/', views.choice_tendency),
     path('group/find/', views.FindGroup.as_view()),
     path('group/find/<int:pk>/', views.FindGroupDetail.as_view()),
@@ -18,4 +17,7 @@ urlpatterns = [
     path('group/search/', views.GroupSearch.as_view()),
     path('group/update/<str:category>/', views.GroupUpdate.as_view()),
 
+    path('group/<int:group_pk>/planner/', views.planner_list.as_view()),
+    path('group/planner/create/', views.planner_list.as_view()),
+    path('group/planner/<int:pk>/delete', views.planner_detail.as_view()),
 ]

@@ -1,4 +1,4 @@
-package com.oss.android.ViewHolder;
+package com.oss.android.Service.ViewHolder;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;

@@ -11,8 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 
-import com.oss.android.Adapter.GroupPagerAdapter;
 import com.oss.android.Model.GroupModel;
+import com.oss.android.Service.Adapter.GroupPagerAdapter;
 
 public class GroupActivity extends AppCompatActivity {
 

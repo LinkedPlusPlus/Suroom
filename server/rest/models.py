@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import date
 
 # Create your models here.
 
@@ -21,25 +22,29 @@ class User_info(models.Model):
 '''
 
 # User와 Group은 수정 할 시 안드로이드의 MySetting도 수정해줘야 함.
+
+
 class User(models.Model):
-    auth_id = models.CharField(max_length=20)
+    auth_id = models.CharField(max_length=20, unique=True)
     auth_pw = models.CharField(max_length=20)
+
 
 class Group(models.Model):
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=40, default="")
+    description = models.CharField(max_length=40, blank=True, null=True)
     public = models.NullBooleanField(default=True)
-    max_num_people = models.IntegerField(default = 10)
-    num_people = models.IntegerField(default = 0)
-    tag1 = models.CharField(max_length = 20, blank=True, null=True)
-    tag2 = models.CharField(max_length = 20, blank=True, null=True)
-    tag3 = models.CharField(max_length = 20, blank=True, null=True)
-    tag4 = models.CharField(max_length = 20, blank=True, null=True)
-    tag5 = models.CharField(max_length = 20, blank=True, null=True)
+    max_num_people = models.IntegerField(default=10)
+    num_people = models.IntegerField(default=0)
+    tag1 = models.CharField(max_length=20, blank=True, null=True)
+    tag2 = models.CharField(max_length=20, blank=True, null=True)
+    tag3 = models.CharField(max_length=20, blank=True, null=True)
+    tag4 = models.CharField(max_length=20, blank=True, null=True)
+    tag5 = models.CharField(max_length=20, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     notification = models.TextField(null=True)
-    meeting = models.CharField(max_length = 40, null=True)
-    
+    meeting = models.CharField(max_length=40, null=True)
+
+
 class User_Group(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
@@ -49,27 +54,20 @@ class User_Group(models.Model):
     class Meta:
         unique_together = (("user", "group"),)
 
-class Subject(models.Model):
-    name = models.CharField(max_length=20)
-
-class User_Subject(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = (("user_id", "subject_id"),)
 
 class Tendency(models.Model):
     name = models.CharField(max_length=20)
 
+
 class User_Tendency(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     rule = models.SmallIntegerField(default=1)
     learning = models.SmallIntegerField(default=1)
     numberPeople = models.SmallIntegerField(default=1)
     friendship = models.SmallIntegerField(default=1)
     environment = models.SmallIntegerField(default=1)
     style = models.SmallIntegerField(default=1)
+
 
 class Wait(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -80,3 +78,10 @@ class Album(models.Model):
     user = models.ForeignKey(User, null = True,on_delete = models.CASCADE)
     image = models.ImageField(default = 'media/default_image.jpg')
     published = models.DateTimeField(default=timezone.now)
+
+class Planner(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(default=timezone.now)
+    title = models.CharField(max_length=50)  # not blank, not null
+    content = models.CharField(max_length=200, blank=True, null=True)
