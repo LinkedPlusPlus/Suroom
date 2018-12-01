@@ -8,20 +8,22 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/common_google_signin_btn_icon_light_normal_background">
 
         <Button
             android:id="@+id/group_chat_btn_submit"
-            android:layout_width="88dp"
-            android:layout_height="44dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="전송"
+            android:background="@drawable/send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/group_chat_listView" />
+            app:layout_constraintTop_toBottomOf="@+id/group_chat_listView"
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
             android:id="@+id/group_chat_editText_content"
@@ -42,16 +44,15 @@
             android:id="@+id/group_chat_listView"
             style="@style/Widget.AppCompat.ListView.DropDown"
 
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="368dp"
+            android:layout_height="425dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="68dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/group_chat_editText_content"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

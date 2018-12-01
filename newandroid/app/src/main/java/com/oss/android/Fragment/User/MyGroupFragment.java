@@ -107,6 +107,16 @@ public class MyGroupFragment extends Fragment {
             for (int j = 0; j < viewHolder.getTag().length; j++) {
                 viewHolder.getTag()[j].setText(groupList.get(i).getTags()[j]);
             }
+            double [] groupTendency = groupList.get(i).getTendency();
+            double [] userTendency = Setting.getUserTendency();
+
+            double sum = 0;
+            for(int j=0; j<6; j++){
+                sum += Math.pow(groupTendency[j] - userTendency[j], 2);
+            }
+            double error = sum / 24 * 100;
+            int correct_rate = (int)(100 - error);
+            viewHolder.getCorrect().setText(Integer.toString(correct_rate));
 
             // setAnimation(holder.imageView, i);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -211,6 +221,7 @@ public class MyGroupFragment extends Fragment {
                 int numPeople;
                 int maxNumPeople;
                 String[] tag = new String[Setting.NUM_OF_TAG];
+                double rule, learning, numberPeople, friendship, environment, style;
 
                 try {
                     for (int i = 0; i < result.length(); i++) {
@@ -227,7 +238,13 @@ public class MyGroupFragment extends Fragment {
                             } else
                                 tag[j] = "# " + temp;
                         }
-                        groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag));
+                        rule = result.getJSONObject(i).getDouble("rule");
+                        learning = result.getJSONObject(i).getDouble("learning");
+                        numberPeople = result.getJSONObject(i).getDouble("numberPeople");
+                        friendship = result.getJSONObject(i).getDouble("friendship");
+                        environment = result.getJSONObject(i).getDouble("environment");
+                        style = result.getJSONObject(i).getDouble("style");
+                        groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag, rule, learning, numberPeople, friendship, environment, style));
                     }
 
                     adapter = new MyAdapter(context, groupList);

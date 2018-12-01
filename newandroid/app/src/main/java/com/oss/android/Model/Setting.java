@@ -9,6 +9,8 @@ public class Setting {
     private static String name;
     private static int groupId; // 이게 필요한가?
 
+    private static double [] userTendency;
+
 
     public static String getUrl() {
         return url;
@@ -40,5 +42,13 @@ public class Setting {
 
     public static void setGroupId(int groupId) {
         Setting.groupId = groupId;
+    }
+
+    public static double[] getUserTendency() {
+        return userTendency;
+    }
+
+    public static void setUserTendency(double[] userTendency) {
+        Setting.userTendency = userTendency;
     }
 }

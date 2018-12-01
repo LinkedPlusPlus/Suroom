@@ -48,6 +48,7 @@ public class JoinCheck extends Activity {
                 try {
                     reqData.accumulate("user_id", Setting.getUserId());
                     reqData.accumulate("group_id", groupId);
+                    reqData.accumulate("role", 2);
 
                     JoinGroupTask send = new JoinGroupTask();
                     send.execute(Setting.getUrl() + "group/join/", reqData.toString());

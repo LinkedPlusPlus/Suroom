@@ -28,7 +28,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class GroupMakeActivity extends AppCompatActivity {
-
     public static final int NUM_OF_TAG = 5;
     private EditText editText_name, editText_description;
     private EditText[] editTexts_tags;
@@ -162,6 +161,7 @@ public class GroupMakeActivity extends AppCompatActivity {
             try {
                 reqData.accumulate("user_id", Setting.getUserId());
                 reqData.accumulate("group_id", result);
+                reqData.accumulate("role", 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -190,7 +190,7 @@ public class GroupMakeActivity extends AppCompatActivity {
                 conn.setRequestProperty("Context_Type", "application/json");
                 conn.setRequestProperty("Accept-Charset", "UTF-8");
 
-                Log.d("request data", dataStr);
+                Log.d("Join request data", dataStr);
 
                 OutputStream os = conn.getOutputStream();
                 os.write(dataStr.getBytes("UTF-8"));

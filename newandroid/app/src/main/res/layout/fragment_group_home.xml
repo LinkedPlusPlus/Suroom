@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/whiteback"
     tools:context=".Fragment.Group.HomeFragment">
 
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="384dp"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -16,6 +17,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/whiteback"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +47,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
+                android:background="@drawable/name"
                 android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="24sp" />
@@ -76,7 +80,7 @@
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_weight="0"
-                    android:text="모임" />
+                    android:background="@drawable/moim" />
 
                 <TextView
                     android:id="@+id/group_home_textview_meeting"

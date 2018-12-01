@@ -59,6 +59,14 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         Setting.setUserId(result.getInt("id"));
                         Setting.setName(result.getString("auth_id")); // 이 edit_id는 Username임
+                        double [] tendency = new double[6];
+                        tendency[0] = result.getDouble("rule");
+                        tendency[1] = result.getDouble("learning");
+                        tendency[2] = result.getDouble("numberPeople");
+                        tendency[3] = result.getDouble("friendship");
+                        tendency[4] = result.getDouble("environment");
+                        tendency[5] = result.getDouble("style");
+                        Setting.setUserTendency(tendency);
                         Intent intent = new Intent(getApplicationContext(), UserActivity.class);
                         startActivity(intent);
                         MainActivity.mainActivity.finish();

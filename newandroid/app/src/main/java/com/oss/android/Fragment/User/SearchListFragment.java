@@ -125,6 +125,16 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
             viewHolder.getDescription().setText(groupList.get(i).getDescription());
             viewHolder.getNumPeople().setText(Integer.toString(groupList.get(i).getNumPeople()));
             viewHolder.getMaxNumPeople().setText(Integer.toString(groupList.get(i).getMaxNumPeolpe()));
+            double [] groupTendency = groupList.get(i).getTendency();
+            double [] userTendency = Setting.getUserTendency();
+
+            double sum = 0;
+            for(int j=0; j<6; j++){
+                sum += Math.pow(groupTendency[j] - userTendency[j], 2);
+            }
+            double error = sum / 24 * 100;
+            int correct_rate = (int)(100 - error);
+            viewHolder.getCorrect().setText(Integer.toString(correct_rate));
             for (int j = 0; j < viewHolder.getTag().length; j++) {
                 viewHolder.getTag()[j].setText(groupList.get(i).getTags()[j]);
             }
@@ -216,27 +226,36 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
             int numPeople;
             int maxNumPeople;
             String[] tag = new String[Setting.NUM_OF_TAG];
+            double rule, learning, numberPeople, friendship, environment, style;
 
             try {
-                for (int i = 0; i < result.length(); i++) {
-                    id = result.getJSONObject(i).getInt("id");
-                    title = result.getJSONObject(i).getString("name");
-                    description = result.getJSONObject(i).getString("description");
-                    numPeople = result.getJSONObject(i).getInt("num_people");
-                    maxNumPeople = result.getJSONObject(i).getInt("max_num_people");
-                    for (int j = 0; j < tag.length; j++) {
-                        tag[j] = " ";
-                        String temp = result.getJSONObject(i).getString("tag" + Integer.toString(j + 1));
-                        if (temp.equals("null")) {
+                if(result != null) {
+                    for (int i = 0; i < result.length(); i++) {
+                        id = result.getJSONObject(i).getInt("id");
+                        title = result.getJSONObject(i).getString("name");
+                        description = result.getJSONObject(i).getString("description");
+                        numPeople = result.getJSONObject(i).getInt("num_people");
+                        maxNumPeople = result.getJSONObject(i).getInt("max_num_people");
+                        for (int j = 0; j < tag.length; j++) {
                             tag[j] = " ";
-                        } else
-                            tag[j] = "# " + temp;
+                            String temp = result.getJSONObject(i).getString("tag" + Integer.toString(j + 1));
+                            if (temp.equals("null")) {
+                                tag[j] = " ";
+                            } else
+                                tag[j] = "# " + temp;
+                        }
+                        rule = result.getJSONObject(i).getDouble("rule");
+                        learning = result.getJSONObject(i).getDouble("learning");
+                        numberPeople = result.getJSONObject(i).getDouble("numberPeople");
+                        friendship = result.getJSONObject(i).getDouble("friendship");
+                        environment = result.getJSONObject(i).getDouble("environment");
+                        style = result.getJSONObject(i).getDouble("style");
+                        groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag, rule, learning, numberPeople, friendship, environment, style));
                     }
-                    groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag));
-                }
 
-                adapter = new MyAdapter(mContext, groupList);
-                recyclerView.setAdapter(adapter);
+                    adapter = new MyAdapter(mContext, groupList);
+                    recyclerView.setAdapter(adapter);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

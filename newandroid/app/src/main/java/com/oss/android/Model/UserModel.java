@@ -5,6 +5,15 @@ public class UserModel {
     //ex) 상대방과 1:1 채팅 등
     private int id;
     private String name;
+    private double [] tendency;
+
+    public double[] getTendency() {
+        return tendency;
+    }
+
+    public void setTendency(double[] tendency) {
+        this.tendency = tendency;
+    }
 
     public int getId() {
         return id;

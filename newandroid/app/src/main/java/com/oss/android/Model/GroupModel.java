@@ -12,6 +12,7 @@ public class GroupModel {
     private String created_date;
     private String notification;
     private String meeting;
+    private double[] tendency;
 
     public GroupModel() {
         flag = false;
@@ -27,6 +28,22 @@ public class GroupModel {
         this.tags = new String[5];
         for (int i = 0; i < tags.length; i++) {
             this.tags[i] = tags[i];
+        }
+    }
+
+    public GroupModel(int id, String title, String description, int numPeople, int maxNumPeolpe, String[] tags, double... tendencies) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.numPeople = numPeople;
+        this.maxNumPeolpe = maxNumPeolpe;
+        this.tags = new String[5];
+        for (int i = 0; i < tags.length; i++) {
+            this.tags[i] = tags[i];
+        }
+        this.tendency = new double[6];
+        for(int i=0; i<6; i++){
+            this.tendency[i] = tendencies[i];
         }
     }
 
@@ -80,6 +97,10 @@ public class GroupModel {
 
     public String[] getTags() {
         return tags;
+    }
+
+    public double[] getTendency() {
+        return tendency;
     }
 
     public void setTags(String... tags) {
