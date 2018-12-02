@@ -3,6 +3,7 @@ package com.oss.android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (result == null) {
                     Toast.makeText(getApplicationContext(), "로그인 실패.", Toast.LENGTH_LONG).show();
                 } else {
+                    Log.d("test", result.toString());
                     try {
                         Setting.setUserId(result.getInt("id"));
                         Setting.setName(result.getString("auth_id")); // 이 edit_id는 Username임

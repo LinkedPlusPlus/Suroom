@@ -166,7 +166,7 @@ public class GroupMakeActivity extends AppCompatActivity {
 
             JSONObject reqData = new JSONObject();
             try {
-                reqData.accumulate("user", Setting.getUserId());
+                reqData.accumulate("user_id", Setting.getUserId());
                 reqData.accumulate("group_id", result);
                 reqData.accumulate("role", 1);
             } catch (JSONException e) {

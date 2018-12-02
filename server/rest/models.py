@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from datetime import date
 
 # Create your models here.
 
@@ -22,29 +21,33 @@ class User_info(models.Model):
 '''
 
 # User와 Group은 수정 할 시 안드로이드의 MySetting도 수정해줘야 함.
-
-
 class User(models.Model):
-    auth_id = models.CharField(max_length=20, unique=True)
+    auth_id = models.CharField(max_length=20)
     auth_pw = models.CharField(max_length=20)
-
 
 class Group(models.Model):
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=40, blank=True, null=True)
+    description = models.CharField(max_length=40, default="")
     public = models.NullBooleanField(default=True)
-    max_num_people = models.IntegerField(default=10)
-    num_people = models.IntegerField(default=0)
-    tag1 = models.CharField(max_length=20, blank=True, null=True)
-    tag2 = models.CharField(max_length=20, blank=True, null=True)
-    tag3 = models.CharField(max_length=20, blank=True, null=True)
-    tag4 = models.CharField(max_length=20, blank=True, null=True)
-    tag5 = models.CharField(max_length=20, blank=True, null=True)
+    max_num_people = models.IntegerField(default = 10)
+    num_people = models.IntegerField(default = 0)
+    tag1 = models.CharField(max_length = 20, blank=True, null=True)
+    tag2 = models.CharField(max_length = 20, blank=True, null=True)
+    tag3 = models.CharField(max_length = 20, blank=True, null=True)
+    tag4 = models.CharField(max_length = 20, blank=True, null=True)
+    tag5 = models.CharField(max_length = 20, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     notification = models.TextField(null=True)
-    meeting = models.CharField(max_length=40, null=True)
-
-
+    meeting = models.CharField(max_length = 40, null=True)
+    ### tendency
+    rule = models.FloatField(default=1, blank=True, null=True)
+    learning = models.FloatField(default=1, blank=True, null=True)
+    numberPeople = models.FloatField(default=1, blank=True, null=True)
+    friendship = models.FloatField(default=1, blank=True, null=True)
+    environment = models.FloatField(default=1, blank=True, null=True)
+    style = models.FloatField(default=1, blank=True, null=True)
+    ###
+    
 class User_Group(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
@@ -58,16 +61,14 @@ class User_Group(models.Model):
 class Tendency(models.Model):
     name = models.CharField(max_length=20)
 
-
 class User_Tendency(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     rule = models.SmallIntegerField(default=1)
     learning = models.SmallIntegerField(default=1)
     numberPeople = models.SmallIntegerField(default=1)
     friendship = models.SmallIntegerField(default=1)
     environment = models.SmallIntegerField(default=1)
     style = models.SmallIntegerField(default=1)
-
 
 class Wait(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -78,6 +79,7 @@ class Album(models.Model):
     user = models.ForeignKey(User, null = True,on_delete = models.CASCADE)
     image = models.ImageField(default = 'media/default_image.jpg')
     published = models.DateTimeField(default=timezone.now)
+
 
 class Planner(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
