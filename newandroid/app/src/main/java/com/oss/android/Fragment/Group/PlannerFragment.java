@@ -139,6 +139,7 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         //현재 날짜 텍스트뷰에 뿌려줌
         editText_year.setText(curYearFormat.format(date));
         editText_month.setText(curMonthFormat.format(date));
+        daypoint = curDayFormat.format(date);
 
         plannerList = new ArrayList<>();
         dayList = new ArrayList<>();
@@ -152,7 +153,6 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         text_date.setText(editText_month.getText().toString() + "월 " + day + "일");
         httpGET = new HttpGET(Integer.parseInt(editText_year.getText().toString()), Integer.parseInt(editText_month.getText().toString()), Integer.parseInt(day));
         httpGET.execute();
-
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -223,7 +223,6 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
 
         gridAdapter = new GridAdapter(getActivity().getApplicationContext(), dayList);
         gridView.setAdapter(gridAdapter);
-        //gridAdapter.notifyDataSetChanged();
     }
 
 
@@ -263,7 +262,7 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
                 intent.putExtra("group_id", Setting.getGroupId());
                 intent.putExtra("year", editText_year.getText().toString());
                 intent.putExtra("month", editText_month.getText().toString());
-                if (daypoint != null && 0 < Integer.parseInt(daypoint) && Integer.parseInt(daypoint) < 10)
+                if (daypoint != null && 0 < Integer.parseInt(daypoint) && Integer.parseInt(daypoint) < 10 && daypoint.length() <2)
                     daypoint = "0" + daypoint;
                 intent.putExtra("day", daypoint);
                 startActivityForResult(intent, PLANNER_CREATE_CODE);
