@@ -51,6 +51,16 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
         user = intent.getIntExtra("user", 0);
         group = intent.getIntExtra("group", 0);
 
+        if(user != Setting.getUserId()){
+            edit_title.setFocusable(false);
+            edit_title.setClickable(false);
+            edit_date.setFocusable(false);
+            edit_date.setClickable(false);
+            edit_content.setFocusable(false);
+            edit_content.setClickable(false);
+            btn_submit.setVisibility(View.GONE);
+            btn_delete.setVisibility(View.GONE);
+        }
         btn_cancel.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
         btn_delete.setOnClickListener(this);

@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,6 +140,32 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         //현재 날짜 텍스트뷰에 뿌려줌
         editText_year.setText(curYearFormat.format(date));
         editText_month.setText(curMonthFormat.format(date));
+
+        editText_year.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    editText_month.requestFocus();
+                    return true;
+                }
+                return false;
+
+            }
+        });
+        editText_month.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    int month = Integer.parseInt(editText_month.getText().toString()) - 1;
+                    setCalendarDate(Integer.parseInt(editText_year.getText().toString()), month);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         daypoint = curDayFormat.format(date);
 
         plannerList = new ArrayList<>();
@@ -262,7 +289,7 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
                 intent.putExtra("group_id", Setting.getGroupId());
                 intent.putExtra("year", editText_year.getText().toString());
                 intent.putExtra("month", editText_month.getText().toString());
-                if (daypoint != null && 0 < Integer.parseInt(daypoint) && Integer.parseInt(daypoint) < 10 && daypoint.length() <2)
+                if (daypoint != null && 0 < Integer.parseInt(daypoint) && Integer.parseInt(daypoint) < 10 && daypoint.length() < 2)
                     daypoint = "0" + daypoint;
                 intent.putExtra("day", daypoint);
                 startActivityForResult(intent, PLANNER_CREATE_CODE);
