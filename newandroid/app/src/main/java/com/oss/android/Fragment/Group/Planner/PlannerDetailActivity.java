@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,11 @@ import com.oss.android.Fragment.Group.PlannerFragment;
 import com.oss.android.Model.Setting;
 import com.oss.android.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -61,6 +66,7 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
                 break;
             }
             case R.id.planner_detail_btn_submit: {
+                new HttpPut().execute(edit_title.getText().toString(), edit_date.getText().toString(), edit_content.getText().toString());
                 break;
             }
             case R.id.planner_detail_btn_delete: {
@@ -71,7 +77,7 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    private class HttpDelete extends AsyncTask<String, Void, Integer>{
+    private class HttpDelete extends AsyncTask<String, Void, Integer> {
 
         HttpURLConnection conn = null;
         String REQUEST_METHOD = "DELETE";
@@ -81,9 +87,8 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
         @Override
         protected Integer doInBackground(String... strings) {
             Integer resonseCode = null;
-
             try {
-                URL url = new URL(Setting.getUrl() + "group/planner/"+id +"/delete");
+                URL url = new URL(Setting.getUrl() + "group/planner/" + id + "/delete");
                 conn = (HttpURLConnection) url.openConnection();
 
                 conn.setRequestMethod(REQUEST_METHOD);
@@ -97,8 +102,8 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }finally {
-                if(conn!=null)
+            } finally {
+                if (conn != null)
                     conn.disconnect();
             }
             return resonseCode;
@@ -108,7 +113,7 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
 
-            if (result>=200 && result<300){
+            if (result >= 200 && result < 300) {
                 Intent intent = new Intent();
                 intent.putExtra("day", init_day);
                 setResult(PlannerFragment.PLANNER_OK, intent);
@@ -120,5 +125,68 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    private class HttpPut extends AsyncTask<String, Void, Integer> {
 
+        HttpURLConnection conn = null;
+        String REQUEST_METHOD = "PUT";
+        int READ_TIMEOUT = 15000;
+        int CONNECTION_TIMEOUT = 15000;
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+            String title = strings[0];
+            String date = strings[1];
+            String content = strings[2];
+
+            Integer resonseCode = null;
+            try {
+                URL url = new URL(Setting.getUrl() + "group/planner/" + id + "/update");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod(REQUEST_METHOD);
+               // conn.setReadTimeout(READ_TIMEOUT);
+                //conn.setConnectTimeout(CONNECTION_TIMEOUT);
+
+
+                JSONObject data = new JSONObject();
+                data.accumulate("title", title);
+                data.accumulate("date", date);
+                data.accumulate("content", content);
+                Log.d("data", data.toString());
+
+                OutputStream os = conn.getOutputStream();
+                os.write(data.toString().getBytes("UTF-8"));
+                os.flush();
+                os.close();
+
+                resonseCode = conn.getResponseCode();
+                conn.disconnect();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (conn != null)
+                    conn.disconnect();
+            }
+            return resonseCode;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+
+            if (result >= 200 && result < 300) {
+                Intent intent = new Intent();
+                intent.putExtra("day", init_day);
+                setResult(PlannerFragment.PLANNER_OK, intent);
+                finish();
+            } else {
+                setResult(PlannerFragment.PLANNER_FAIL);
+                finish();
+            }
+        }
+    }
 }

@@ -17,7 +17,8 @@ urlpatterns = [
     path('group/search/', views.GroupSearch.as_view()),
     path('group/update/<str:category>/', views.GroupUpdate.as_view()),
 
-    path('group/<int:group_pk>/planner/', views.planner_list.as_view()),
-    path('group/planner/create/', views.planner_list.as_view()),
-    path('group/planner/<int:pk>/delete', views.planner_detail.as_view()),
+    path('group/<int:group_pk>/planner/', views.PlannerList.as_view()),
+    path('group/planner/create/', views.PlannerList.as_view()),
+    path('group/planner/<int:pk>/delete', views.PlannerDetail.as_view()),
+    path('group/planner/<int:pk>/update', views.PlannerDetail.as_view()),
 ]

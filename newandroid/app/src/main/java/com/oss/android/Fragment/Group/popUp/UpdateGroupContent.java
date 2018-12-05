@@ -29,7 +29,7 @@ public class UpdateGroupContent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_group_content);
-
+ 
         final String category = getIntent().getStringExtra("category");
 
         text_content = (EditText) findViewById(R.id.textContent);
