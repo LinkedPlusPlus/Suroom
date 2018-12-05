@@ -12,6 +12,15 @@ public class Setting {
     private static double [] userTendency;
 
 
+    public static void Init(){
+        url = "";
+        userId =0;
+        name = "";
+        groupId = 0;
+        userTendency = null;
+
+    }
+
     public static String getUrl() {
         return url;
     }
