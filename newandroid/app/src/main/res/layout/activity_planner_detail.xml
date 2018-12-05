@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     android:orientation="vertical"
     tools:context=".Fragment.Group.Planner.PlannerDetailActivity">
 
@@ -23,8 +24,8 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Title: "
+            android:layout_height="wrap_content"
+            android:background="@drawable/whatday"
             android:textSize="30dp" />
 
         <EditText
@@ -52,7 +53,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Date: "
+            android:background="@drawable/whenday"
             android:textSize="30dp" />
 
         <EditText
@@ -74,7 +75,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="start"
-        android:hint="content"
+        android:hint="이날 무얼 할까요?"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +99,7 @@
             android:id="@+id/planner_detail_btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete" />
+            android:background="@drawable/del" />
 
         <View
             android:layout_width="wrap_content"
@@ -108,15 +109,15 @@
 
         <Button
             android:id="@+id/planner_detail_btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/out" />
 
         <Button
             android:id="@+id/planner_detail_btn_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:background="@drawable/yes" />
     </LinearLayout>
 
 

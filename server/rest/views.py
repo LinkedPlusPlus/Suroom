@@ -403,7 +403,7 @@ class GroupUpdate(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class planner_list(APIView):
+class PlannerList(APIView):
     def get(self, request, group_pk):
         year = None
         month = None
@@ -432,7 +432,7 @@ class planner_list(APIView):
             return Response(status.HTTP_406_NOT_ACCEPTABLE)
 
 
-class planner_detail(APIView):
+class PlannerDetail(APIView):
     def get_object(self, pk):
         try:
             return Planner.objects.get(pk=pk)
@@ -443,3 +443,16 @@ class planner_detail(APIView):
         obj = self.get_object(pk)
         obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, pk):
+        data = JSONParser().parse(request)
+        try:
+            planner = self.get_object(pk)
+        except Planner.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        planner.date = data['date']
+        planner.title = data['title']
+        planner.content = data['content']
+        planner.save()
+        return Response(status=status.HTTP_200_OK)
