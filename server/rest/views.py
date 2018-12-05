@@ -15,6 +15,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
 from django.db.models import Q
+import csv
 
 # Create your views here.
 
@@ -357,10 +358,29 @@ class album_list(APIView):
 # 'searchText' = '프로그래밍 자바 영어',
 # }
 class GroupSearch(APIView):
+    def readDistrict(self):
+        f = open('./rest/data/district.csv')
+        lines = csv.reader(f)
+        districtList = list()
+        for line in lines:
+            districtList.append(line)
+        return districtList
+
     def post(self, request):
         data = JSONParser().parse(request)
+        districtList = self.readDistrict()
         try:
             words = data['searchText'].split()
+            words_copy = list(words)
+            for word in words_copy:
+                #print(word)
+                for district in districtList:
+                    #print(district)
+                    if(word in district):
+                        result = [line[2] for line in districtList if district[1] in line]
+                        words.extend(result)
+            words = list(set(words))
+            print(words)
             groups = Group.objects.filter(Q(tag1__in=words)|Q(tag2__in=words)|Q(tag3__in=words)|Q(tag4__in=words)|Q(tag5__in=words))
         except Group.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)

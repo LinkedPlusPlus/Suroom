@@ -140,8 +140,12 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
             double [] userTendency = Setting.getUserTendency();
 
             double sum = 0;
-            for(int j=0; j<6; j++){
-                sum += Math.pow(groupTendency[j] - userTendency[j], 2);
+            try {
+                for (int j = 0; j < 6; j++) {
+                    sum += Math.pow(groupTendency[j] - userTendency[j], 2);
+                }
+            } catch (Exception e){
+                sum  = -1;
             }
             double error = sum / 24 * 100;
             int correct_rate = (int)(100 - error);
@@ -333,6 +337,8 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
         protected void onPostExecute(JSONArray result) {
             super.onPostExecute(result);
 
+            double rule, learning, numberPeople, friendship, environment, style;
+
             if(result != null){
                 groupList = null;
                 groupList = new ArrayList<>();
@@ -361,7 +367,13 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
                             } else
                                 tag[j] = "# " + temp;
                         }
-                        groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag));
+                        rule = result.getJSONObject(i).getDouble("rule");
+                        learning = result.getJSONObject(i).getDouble("learning");
+                        numberPeople = result.getJSONObject(i).getDouble("numberPeople");
+                        friendship = result.getJSONObject(i).getDouble("friendship");
+                        environment = result.getJSONObject(i).getDouble("environment");
+                        style = result.getJSONObject(i).getDouble("style");
+                        groupList.add(new GroupModel(id, title, description, numPeople, maxNumPeople, tag, rule, learning, numberPeople, friendship, environment, style));
                     }
 
                     adapter = new MyAdapter(mContext, groupList);
