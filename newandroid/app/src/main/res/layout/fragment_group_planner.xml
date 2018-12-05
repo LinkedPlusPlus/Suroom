@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     tools:context=".Fragment.Group.PlannerFragment">
 
     <ScrollView
@@ -54,9 +55,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
+                android:isScrollContainer="false"
                 android:listSelector="@android:color/holo_orange_dark"
                 android:numColumns="7"
-                android:isScrollContainer="false"
                 android:stretchMode="columnWidth"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,8 +103,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
+                android:background="@drawable/arrowleft"
                 android:scaleType="fitCenter"
-                android:src="@drawable/planner_left"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,19 +116,19 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
+                android:background="@drawable/arrow"
                 android:scaleType="fitCenter"
-                android:src="@drawable/planner_right"
                 app:layout_constraintStart_toEndOf="@+id/group_planner_edittext_month"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/group_planner_btn_add"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="84dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="+"
+                android:background="@drawable/newplan"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
