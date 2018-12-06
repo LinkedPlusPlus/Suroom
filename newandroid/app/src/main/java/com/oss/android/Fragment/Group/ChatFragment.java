@@ -59,9 +59,11 @@ public class ChatFragment extends Fragment {
         btn_submmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatModel chatModel = new ChatModel(user_id, Setting.getName(), content.getText().toString(), simpleDateFormat.format(new Date()), R.mipmap.ic_launcher);
-                databaseReference.child(Integer.toString(Setting.getGroupId())).push().setValue(chatModel);
-                content.setText("");
+                if(!content.getText().toString().equals("")) {
+                    ChatModel chatModel = new ChatModel(user_id, Setting.getName(), content.getText().toString(), simpleDateFormat.format(new Date()), R.mipmap.ic_launcher);
+                    databaseReference.child(Integer.toString(Setting.getGroupId())).push().setValue(chatModel);
+                    content.setText("");
+                }
             }
         });
 

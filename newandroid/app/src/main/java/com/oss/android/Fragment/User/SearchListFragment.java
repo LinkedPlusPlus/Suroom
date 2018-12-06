@@ -158,7 +158,6 @@ public class SearchListFragment extends Fragment implements SwipeRefreshLayout.O
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Toast.makeText(context, groupList.get(i).getId() + " " + groupList.get(i).getTitle(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, GroupActivity.class);
                     intent.putExtra("id", groupList.get(i).getId());
                     Setting.setGroupId(groupList.get(i).getId());

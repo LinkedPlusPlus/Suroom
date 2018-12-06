@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.oss.android.GroupActivity;
 import com.oss.android.Model.GroupModel;
 import com.oss.android.Model.Setting;
@@ -124,7 +122,6 @@ public class MyGroupFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Toast.makeText(context, groupList.get(i).getId() + "" + groupList.get(i).getTitle(), Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(context, GroupActivity.class);
                     intent.putExtra("id", groupList.get(i).getId());

@@ -40,7 +40,6 @@ public class JoinActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Toast.makeText(getApplicationContext(), jsonParam.toString(), Toast.LENGTH_LONG).show();
 
                     HttpPost send = new HttpPost(Setting.getUrl() + "join/", jsonParam);
                     send.start();

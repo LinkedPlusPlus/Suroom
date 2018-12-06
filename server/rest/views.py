@@ -90,38 +90,6 @@ def user_login(request):
         except(User.DoesNotExist):
             return (Response(status=status.HTTP_404_NOT_FOUND))
 
-@api_view(['GET', 'POST'])
-def choice_subject(request):
-    if (request.method == 'POST'):
-        data = JSONParser().parse(request)
-        user_id = data['id']
-        list = []
-
-        for key in data:
-            if(key == 'id'):
-                continue
-            try:
-                subject_id = (Subject.objects.get(name=key)).id
-                if(data[key] == 1):
-                    insert = User_Subject.objects.create(user_id=User.objects.get(pk=user_id), subject_id=Subject.objects.get(pk=subject_id))
-                    list.append(insert)
-                else:
-                    queryset = User_Subject.objects.all()
-                    queryset = queryset.filter(user_id=User.objects.get(pk=user_id), subject_id=Subject.objects.get(pk=subject_id))
-                    queryset.delete()
-            except:
-                continue
-            
-        return Response(status=status.HTTP_200_OK)
-    
-    elif (request.method == 'GET'):
-        user_subject = User_Subject.objects.all()
-        serializer = UserSubjectSerializer(user_subject, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
-
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
 @api_view(['POST', 'GET'])
 def choice_tendency(request):
     if (request.method=='POST'):
@@ -280,7 +248,6 @@ def join_group(request):
 class UserGroupList(APIView):
     def get_object(self, user_pk, group_pk):
         try:
-            print(user_pk, group_pk)
             user = User.objects.get(pk= user_pk)
             group = Group.objects.get(pk= group_pk)
         except User.DoesNotExist:
@@ -373,14 +340,11 @@ class GroupSearch(APIView):
             words = data['searchText'].split()
             words_copy = list(words)
             for word in words_copy:
-                #print(word)
                 for district in districtList:
-                    #print(district)
                     if(word in district):
                         result = [line[2] for line in districtList if district[1] in line]
                         words.extend(result)
             words = list(set(words))
-            print(words)
             groups = Group.objects.filter(Q(tag1__in=words)|Q(tag2__in=words)|Q(tag3__in=words)|Q(tag4__in=words)|Q(tag5__in=words))
         except Group.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
