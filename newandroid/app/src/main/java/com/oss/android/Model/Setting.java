@@ -7,7 +7,7 @@ public class Setting {
     private static String url;
     private static int userId;
     private static String name;
-    private static int groupId; // 이게 필요한가?
+    private static int groupId;
 
     private static double [] userTendency;
 

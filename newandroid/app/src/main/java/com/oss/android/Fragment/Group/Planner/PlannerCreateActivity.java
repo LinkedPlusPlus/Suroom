@@ -26,6 +26,11 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+/**
+ * @author jeje (las9897@gmail.com)
+ * @file com.oss.android.Fragment.Group.Planner.PlannerCreateActivity.java
+ * @brief 새 일정을 눌렀을 때 호출되는 액티비티입니다. 일정 추가 기능이 구현되어있습니다.
+ */
 public class PlannerCreateActivity extends AppCompatActivity {
 
     private EditText edit_title, edit_date, edit_content;
@@ -88,13 +93,13 @@ public class PlannerCreateActivity extends AppCompatActivity {
 
                 HttpPost send = new HttpPost();
                 send.execute(requestStr);
-
-
             }
         });
-
     }
 
+    /**
+     * @brief 서버에 POST 요청을 하는 이너 클래스입니다. 요청이 전달되어 정상적으로 진행되면, 일정이 추가됩니다.
+     */
     private class HttpPost extends AsyncTask<String, Void, Integer> {
 
         HttpURLConnection conn = null;
@@ -151,6 +156,11 @@ public class PlannerCreateActivity extends AppCompatActivity {
 
             return null;
         }
+
+        /**
+         * @brief result가 null이 아닐 때는 통신이 성공했다는 의미이므로, 성공하면 리스트뷰를 새로 호출하기 위해서 day를 Intent에 담아서 PlannerFragment에 전달합니다.
+         * @param result
+         */
 
         @Override
         protected void onPostExecute(Integer result) {

@@ -4,6 +4,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * @author jeje (las9897@gmail.com)
+ * @file com.oss.android.Service.ViewHolder.ChatViewHolder.java
+ * @brief ChatListAdapter에서 사용되는 ViewHolder입니다. findViewById의 호출을 최소화시키기 위해서 만들었습니다.
+ */
 public class ChatViewHolder {
     public TextView textView_other_name;
     public TextView textView_other_content;

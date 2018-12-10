@@ -21,7 +21,11 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+/**
+ * @author jeje (las9897@gmail.com)
+ * @file com.oss.android.Fragment.Group.Planner.PlannerDetailActivity.java
+ * @brief 리스트에 표시된 일정을 눌렀을 때 호출되는 액티비티 입니다. 일정을 수정하거나 삭제하는 기능이 구현되어있습니다.
+ */
 public class PlannerDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText edit_title, edit_date, edit_content;
@@ -86,6 +90,9 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    /**
+     * @brief 서버에 DELETE 요청을 하는 이너 클래스입니다. 요청이 전달되어 정상적으로 진행되면, 일정이 삭제됩니다.
+     */
     private class HttpDelete extends AsyncTask<String, Void, Integer> {
 
         HttpURLConnection conn = null;
@@ -118,6 +125,11 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
             return resonseCode;
         }
 
+
+        /**
+         * @brief result는 responseCode를 담고 있습니다. 200 이상 300 미만의 코드번호는 삭제 성공의 의미를 담은 코드번호이므로 요청이 성공적으로 처리되었다는 의미를 갖고있습니다. 액티비티를 종료하면서 PlannerFragment에 일정이 삭제되었다는 처리를 해야하기 때문에 day를 intent에 담아서 전달합니다.
+         * @param result
+         */
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
@@ -133,7 +145,9 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
             }
         }
     }
-
+    /**
+     * @brief 서버에 PUT 요청을 하는 이너 클래스입니다. 요청이 전달되어 정상적으로 진행되면, 일정이 변경됩니다.
+     */
     private class HttpPut extends AsyncTask<String, Void, Integer> {
 
         HttpURLConnection conn = null;
@@ -183,6 +197,10 @@ public class PlannerDetailActivity extends AppCompatActivity implements View.OnC
             return resonseCode;
         }
 
+        /**
+         * @brief result는 responseCode를 담고 있습니다. 200 이상 300 미만의 코드번호는 변경의 성공의 의미를 담은 코드번호이므로 요청이 성공적으로 처리되었다는 의미를 갖고있습니다. 액티비티를 종료하면서 PlannerFragment에 일정이 변경되었다는 처리를 해야하기 때문에 day를 intent에 담아서 전달합니다.
+         * @param result
+         */
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);

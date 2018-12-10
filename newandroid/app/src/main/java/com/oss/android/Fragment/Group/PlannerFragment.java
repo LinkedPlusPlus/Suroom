@@ -51,6 +51,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * @author jeje (las9897@gmail.com)
+ * @file com.oss.android.Fragment.Group.PlannerFragment
+ * @brief 그룹 마다 플래너를 하나씩 가지고 있습니다. 그 플래너를 보여주는 프래그먼트로, 사용자가 달력을 조절할 수 있습니다. 일정을 추가할 때는 PlannerCreateActivity를 호출하며, 수정하거나 삭제할 때는 PlannerDetailActivity를 호출합니다.
+ */
 public class PlannerFragment extends Fragment implements View.OnClickListener {
 
     public static final int PLANNER_CREATE_CODE = 1;
@@ -87,6 +92,12 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
+    /**
+     * @brief requestCode가 CREATE인지 DETAIL인지 구분하여 호출한 액티비티에서 전달받은 Intent를 처리합니다. Intent에서 day를 추출하여 그 날에 해당하는 일정을 서버에 다시 요청하여 새로고침을 수행합니다.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLANNER_CREATE_CODE) {
@@ -108,6 +119,13 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * @brief 처음에 사용자에게 보여줄 VIEW를 세팅하는 부분들입니다. 달력의 버튼을 눌렀을 때의 기능 등등이 구현되어있습니다.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group_planner, container, false);
@@ -116,7 +134,6 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         text_date = (TextView) view.findViewById(R.id.group_planner_text_date);
         editText_year = (EditText) view.findViewById(R.id.group_planner_edittext_year);
         editText_month = (EditText) view.findViewById(R.id.group_planner_edittext_month);
-
         imgbtn_left = (ImageButton) view.findViewById(R.id.group_planner_btn_left);
         imgbtn_right = (ImageButton) view.findViewById(R.id.group_planner_btn_right);
         btn_add = (Button) view.findViewById(R.id.group_planner_btn_add);
@@ -125,19 +142,15 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
         mContext = getActivity().getApplicationContext();
-
         httpGET = null;
 
-        //gridview setting
+
         gridView = (ExpandableHeightGridView) view.findViewById(R.id.group_planner_gridview);
         ((ExpandableHeightGridView) gridView).setExpanded(true);
-        // 오늘에 날짜를 세팅 해준다.
+
         long now = System.currentTimeMillis();
         final Date date = new Date(now);
-        //연,월,일을 따로 저장
 
-
-        //현재 날짜 텍스트뷰에 뿌려줌
         editText_year.setText(curYearFormat.format(date));
         editText_month.setText(curMonthFormat.format(date));
 
@@ -194,12 +207,15 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-
-
         return view;
     }
 
-    //ScrollView 이동
+    /**
+     * @brief 날짜를 클릭했을 때 일정이 표시되는 리스트뷰로 스크롤을 이동시켜주는 메소드입니다.
+     * @param view
+     * @param scrollView
+     * @param count
+     */
     public static void scrollToView(View view, final ScrollView scrollView, int count) {
         if (view != null && view != scrollView) {
             count += view.getTop();
@@ -217,8 +233,7 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
 
 
     /**
-     * 해당 월에 표시할 일 수 구함
-     *
+     * @brief year과 month를 입력하면 해당하는 달력을 가져오는 메소드입니다.
      * @param year
      * @param month
      */
@@ -253,6 +268,9 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    /**
+     * @brief 버튼 기능을 모아둔 메소드입니다. xml의 id값을 활용하였으며, 달력의 화살표 기능과 일정 추가 기능이 담겨있습니다.
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -297,6 +315,9 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * @brief 일정 리사이클뷰에 일정 아이템들을 뿌려주는 어댑터입니다.
+     */
     private class PlannerListAdapter extends RecyclerView.Adapter<PlannerListViewHolder> {
         private Context context;
         private ArrayList<PlannerModel> plannerList;
@@ -343,6 +364,9 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * @brief 리사이클뷰에서 findVIewById의 호출을 최소화하기 위해서 ViewHolder를 구현했습니다.
+     */
     private class PlannerListViewHolder extends RecyclerView.ViewHolder {
         private TextView text_date, text_title, text_id, text_user_id;
 
@@ -372,6 +396,9 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * @brief year, month, day를 받아서 서버에 GET 요청을 보내는 이너클래스입니다. 접근성을 생각하여 int 형을 받는 생성자와 string을 받는 생성자, 두개를 만들었습니다.
+     */
     private class HttpGET extends AsyncTask<String, Void, JSONArray> {
 
         private static final String REQUEST_METHOD_GET = "GET";
@@ -443,6 +470,11 @@ public class PlannerFragment extends Fragment implements View.OnClickListener {
             return null;
         }
 
+
+        /**
+         * @brief request가 성공적으로 처리되면 JSONArray 타입의 result를 받게됩니다. 이 result에는 요청했던 날짜에 해당하는 일정들의 데이터가 담겨있으며, 이 데이터들을 plannerList에 넣어서 리사이클뷰와 연결해줍니다.
+         * @param result
+         */
         @Override
         protected void onPostExecute(JSONArray result) {
             super.onPostExecute(result);

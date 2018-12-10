@@ -1,5 +1,10 @@
 package com.oss.android.Model;
 
+/**
+ * @author jeje (las9897@gmail.com)
+ * @file com.oss.android.Model.ChatModel.java
+ * @brief ChatFragment에서 사용되는 데이터 모델입니다.
+ */
 public class ChatModel {
 
 

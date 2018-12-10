@@ -1,7 +1,11 @@
 package com.oss.android.Model;
 
+/**
+ * @author jeje (las9897@gmail.com)
+ * @file com.oss.android.Model.PlannerModel.java
+ * @brief Planner에서 사용되는 데이터모델입니다.
+ */
 public class PlannerModel {
-
     public int id; // planner pk
     public int user;
     public int group;
